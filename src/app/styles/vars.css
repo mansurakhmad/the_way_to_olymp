@@ -15,12 +15,15 @@
   --red-50: #ff3b30;
   --red-10: #ff5e54;
 
-  /* --- Бирюзовые акценты (Cyan/Mint) --- */
+  /* --- акценты (Cyan/Mint/Gold) --- */
   --cyan-100: #39a694;
   --cyan-50: #4cd9c0;
   --cyan-10: #76e7d3;
+  --gold-100: #8c6a2c;
+  --gold-50: #d4af37;
+  --gold-10: #f1d592;
 
-  /* --- Нейтральные и карточки (Gray/Light) --- */
+  /* --- Нейтральные и карточки (Gray/Light/White) --- */
   --white-100: #fff;
   --gray-80: #e9ecef;
   --gray-50: #ced4da;

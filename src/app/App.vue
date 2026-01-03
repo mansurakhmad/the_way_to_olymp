@@ -28,9 +28,10 @@ import { RouterView } from 'vue-router';
   }
 
   .content {
-    margin-top: 40px;
     background-color: var(--glass-white);
+    border: 1px solid var(--glass-border);
     border-radius: 16px;
+    margin-top: 40px;
   }
 }
 </style>
