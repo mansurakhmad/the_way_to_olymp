@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { APP_ROUTES } from '@/shared/config';
 import { BaseButton, BaseCheckbox, BaseInput } from '@/shared/ui';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const username = ref();
 const email = ref();
-const rememberMe = 'rememberMe';
+
+const onEnrollmentClick = () => {
+  router.push(APP_ROUTES.ENROLLMENT);
+};
 </script>
 
 <template>
@@ -12,11 +18,11 @@ const rememberMe = 'rememberMe';
     <div class="fields">
       <BaseInput labelValue="Username" v-model="username" />
       <BaseInput labelValue="Email" v-model="email" />
-      <BaseCheckbox :label="'Remember Me'" :inputIdValue="rememberMe" />
+      <BaseCheckbox :label="'Remember Me'" inputIdValue="rememberMe" />
     </div>
-    <BaseButton value="Login" class="loginButton" />
-    <BaseButton value="Create Account" class="loginButton" theme="secondary" />
-    <BaseButton value="Forgot Account" class="loginButton" theme="secondary" />
+    <BaseButton value="Login" />
+    <BaseButton value="Create Account" theme="secondary" @onClick="onEnrollmentClick" />
+    <BaseButton value="Forgot Account" theme="secondary" />
   </form>
 </template>
 
@@ -37,10 +43,6 @@ const rememberMe = 'rememberMe';
     display: flex;
     flex-direction: column;
     gap: 32px;
-  }
-
-  .loginButton {
-    box-shadow: var(--shadow-overlay) 0 20px 30px -10px;
   }
 }
 </style>

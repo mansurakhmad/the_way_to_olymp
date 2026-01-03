@@ -4,7 +4,7 @@ import banner from '@/shared/assets/loginBanner.png';
 </script>
 
 <template>
-  <div class="loginPage">
+  <div>
     <p class="title">Login</p>
     <div class="content">
       <LoginForm />
@@ -14,10 +14,6 @@ import banner from '@/shared/assets/loginBanner.png';
 </template>
 
 <style lang="scss" scoped>
-.loginPage {
-  padding: 16px;
-}
-
 .content {
   display: flex;
   justify-content: space-between;

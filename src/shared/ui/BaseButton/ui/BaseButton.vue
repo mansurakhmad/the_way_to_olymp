@@ -2,17 +2,20 @@
 import { Button } from 'primevue';
 import type { BaseButtonTypes } from '../models';
 
-const { value, theme = 'primary' } = defineProps<BaseButtonTypes.Props>();
+const { value, theme = 'primary', type = 'button' } = defineProps<BaseButtonTypes.Props>();
 </script>
 
 <template>
-  <Button class="baseButton" :class="`${theme}Theme`">{{ value }}</Button>
+  <Button class="baseButton" :class="`${theme}Theme`" :type="type" @click="$emit('onClick')">
+    {{ value }}
+  </Button>
 </template>
 
 <style lang="scss" scoped>
 .baseButton {
   background-color: var(--glass-white);
   color: var(--white-100);
+  box-shadow: var(--shadow-overlay) 0 20px 30px -10px;
 
   &:not(:disabled):hover {
     background: var(--gold-100);
