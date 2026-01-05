@@ -2,11 +2,16 @@
 import { Button } from 'primevue';
 import type { BaseButtonTypes } from '../models';
 
-const { value, theme = 'primary', type = 'button' } = defineProps<BaseButtonTypes.Props>();
+const {
+  value,
+  theme = 'primary',
+  type = 'button',
+  disabled,
+} = defineProps<BaseButtonTypes.Props>();
 </script>
 
 <template>
-  <Button class="baseButton" :class="`${theme}Theme`" :type="type" @click="$emit('onClick')">
+  <Button class="baseButton" :class="`${theme}Theme`" @click="$emit('onClick')" :disabled :type>
     {{ value }}
   </Button>
 </template>
