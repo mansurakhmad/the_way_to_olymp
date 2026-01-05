@@ -2,41 +2,34 @@
 import { sendEnrollmentRequest } from '@/features/enrollment';
 import { BaseAlert, type BaseAlertTypes, BaseButton, BaseInput, PasswordField } from '@/shared/ui';
 import { testPattern } from '@/shared/utils';
-import { computed, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../config';
 import type { EnrollmentFormTypes } from '../models';
-
-const router = useRouter();
 
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const alertData = ref<BaseAlertTypes.AlertData>();
 
-const passwordValuesAreEqual = computed(() => {
+const passwordValuesAreValid = computed(() => {
   if (!confirmPassword.value) return true;
 
-  return password.value === confirmPassword.value;
+  if (password.value === confirmPassword.value && testPattern(password.value, PASSWORD_REGEX)) {
+    return true;
+  }
+
+  return false;
+});
+
+const emailIsValid = computed(() => {
+  if (!email.value) return true;
+
+  return testPattern(email.value, EMAIL_REGEX);
 });
 
 const submitButtonDisabled = computed(() => {
-  return !email.value || !password.value || !confirmPassword.value;
+  return !email.value || !password.value || !confirmPassword.value || !passwordValuesAreValid.value;
 });
-
-watch(passwordValuesAreEqual, () => {
-  if (!passwordValuesAreEqual.value) {
-    triggerAlert({
-      theme: 'error',
-      title: 'Validation error!',
-      message: 'Passwords mismatch. Requirements: A-Z, 0-9, and !#%$',
-    });
-  } else {
-    alertData.value = undefined;
-  }
-});
-
-const onBackClick = () => router.back();
 
 const triggerAlert = ({
   title,
@@ -49,39 +42,7 @@ const triggerAlert = ({
   if (closeTime) setTimeout(() => (alertData.value = undefined), closeTime);
 };
 
-const submitValidation = () => {
-  if (!email.value || !password.value || !confirmPassword.value) return false;
-
-  if (!passwordValuesAreEqual.value) return false;
-
-  if (!testPattern(password.value, PASSWORD_REGEX)) {
-    triggerAlert({
-      title: 'An error occurred while submitting',
-      message: `Invalid password. Requirements: A-Z, 0-9, and !#%$`,
-      theme: 'error',
-      closeTime: 5000,
-    });
-
-    return false;
-  }
-
-  if (!testPattern(email.value, EMAIL_REGEX)) {
-    triggerAlert({
-      title: 'An error occurred while submitting',
-      message: `Invalid email`,
-      theme: 'error',
-      closeTime: 2000,
-    });
-
-    return false;
-  }
-
-  return true;
-};
-
 const submitForm = async () => {
-  if (!submitValidation()) return;
-
   try {
     await sendEnrollmentRequest({ email: email.value, password: password.value });
 
@@ -110,12 +71,18 @@ const submitForm = async () => {
 
 <template>
   <form class="enrollmentForm" @submit.prevent="submitForm">
-    <BaseInput labelValue="Email" v-model="email" />
-    <PasswordField labelValue="Password" v-model="password" :isValid="passwordValuesAreEqual" />
+    <BaseInput
+      labelValue="Email"
+      v-model="email"
+      :isValid="emailIsValid"
+      errorMessage="Invalid email"
+    />
+    <PasswordField labelValue="Password" v-model="password" :isValid="passwordValuesAreValid" />
     <PasswordField
       labelValue="Confirm password"
+      errorMessage="Invalid password. Requirements: A-Z, 0-9, and !#%$"
       v-model="confirmPassword"
-      :isValid="passwordValuesAreEqual"
+      :isValid="passwordValuesAreValid"
     />
     <BaseButton
       value="Create Account"
@@ -123,7 +90,7 @@ const submitForm = async () => {
       type="submit"
       :disabled="submitButtonDisabled"
     />
-    <BaseButton value="Back" class="button" theme="secondary" @onClick="onBackClick" />
+    <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />
   </form>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template v-slot:title>{{ alertData?.title }}</template>

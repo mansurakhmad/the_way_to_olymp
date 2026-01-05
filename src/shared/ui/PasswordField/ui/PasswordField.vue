@@ -3,7 +3,7 @@ import { FloatLabel, Password } from 'primevue';
 import type { PasswordFieldTypes } from '../models';
 
 const modelValue = defineModel<string>();
-const { labelValue, isValid } = defineProps<PasswordFieldTypes.Props>();
+const { labelValue, isValid, errorMessage } = defineProps<PasswordFieldTypes.Props>();
 console.log('isValid', isValid);
 </script>
 
@@ -17,6 +17,9 @@ console.log('isValid', isValid);
       toggleMask
     />
     <label>{{ labelValue }}</label>
+    <template v-if="!isValid && errorMessage">
+      <div class="errorMessage">{{ errorMessage }}</div>
+    </template>
   </FloatLabel>
 </template>
 
@@ -41,6 +44,13 @@ console.log('isValid', isValid);
     label {
       color: var(--gold-50);
     }
+  }
+
+  .errorMessage {
+    color: var(--red-50);
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 12px;
   }
 }
 </style>
