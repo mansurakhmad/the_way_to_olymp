@@ -4,6 +4,7 @@ import { BaseAlert, type BaseAlertTypes, BaseButton, BaseInput, PasswordField } 
 import { testPattern } from '@/shared/utils';
 import { computed, ref } from 'vue';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../config';
+import { AuthError } from '@supabase/supabase-js';
 import type { EnrollmentFormTypes } from '../models';
 
 const email = ref('');
@@ -43,8 +44,22 @@ const triggerAlert = ({
 };
 
 const submitForm = async () => {
+  alertData.value = undefined;
+
   try {
-    await sendEnrollmentRequest({ email: email.value, password: password.value });
+    const response = await sendEnrollmentRequest({ email: email.value, password: password.value });
+    console.log(response.user?.app_metadata);
+
+    if (!response.user?.user_metadata?.email) {
+      triggerAlert({
+        title: 'Registration error',
+        message: `Email already exist`,
+        theme: 'error',
+        closeTime: 5000,
+      });
+
+      return;
+    }
 
     triggerAlert({
       title: 'Registration was successful!',
@@ -56,15 +71,22 @@ const submitForm = async () => {
     email.value = '';
     password.value = '';
     confirmPassword.value = '';
-  } catch (error) {
-    console.log('error', error);
-
-    triggerAlert({
-      title: 'Registration error',
-      message: `Check logs`,
-      theme: 'error',
-      closeTime: 5000,
-    });
+  } catch (error: unknown) {
+    if (error instanceof AuthError) {
+      triggerAlert({
+        title: error.name,
+        message: error.message,
+        theme: 'error',
+        closeTime: 5000,
+      });
+    } else {
+      triggerAlert({
+        title: 'Something went wrong',
+        message: 'Check logs',
+        theme: 'error',
+        closeTime: 5000,
+      });
+    }
   }
 };
 </script>
@@ -88,6 +110,7 @@ const submitForm = async () => {
       value="Create Account"
       class="button"
       type="submit"
+      theme="accent"
       :disabled="submitButtonDisabled"
     />
     <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />

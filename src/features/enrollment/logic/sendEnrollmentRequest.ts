@@ -7,7 +7,7 @@ export const sendEnrollmentRequest = async (dataToServer: Enrollment.BodyData) =
     ...dataToServer,
     options: { emailRedirectTo: `${window.location.origin}${APP_ROUTES.CONFIRM}` },
   });
-
+  
   if (error) throw error;
 
   return data;

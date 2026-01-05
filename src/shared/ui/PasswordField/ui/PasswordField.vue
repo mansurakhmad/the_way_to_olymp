@@ -4,7 +4,6 @@ import type { PasswordFieldTypes } from '../models';
 
 const modelValue = defineModel<string>();
 const { labelValue, isValid, errorMessage } = defineProps<PasswordFieldTypes.Props>();
-console.log('isValid', isValid);
 </script>
 
 <template>

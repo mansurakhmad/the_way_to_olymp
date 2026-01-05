@@ -1,12 +1,26 @@
 <script setup lang="ts">
+import { APP_ROUTERS_NAMES } from '@/shared/config';
 import { ContentContainer, HeaderApp } from '@/widgets';
-import { RouterView } from 'vue-router';
+import { computed } from 'vue';
+import { RouterView, useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const routesWithSmallContainer = [APP_ROUTERS_NAMES.lOGIN, APP_ROUTERS_NAMES.ENROLLMENT];
+
+const sizeValue = computed(() => {
+  if (routesWithSmallContainer.includes(route.name as APP_ROUTERS_NAMES)) return 'small';
+
+  return 'normal';
+});
 </script>
 
 <template>
   <div class="app">
-    <HeaderApp class="header" />
-    <ContentContainer class="content">
+    <ContentContainer class="headerApp" :sizeValue="sizeValue">
+      <HeaderApp class="header" />
+    </ContentContainer>
+    <ContentContainer class="content" :sizeValue="sizeValue">
       <RouterView />
     </ContentContainer>
   </div>
@@ -23,7 +37,7 @@ import { RouterView } from 'vue-router';
   background-repeat: no-repeat;
   background-image: url('../shared/assets/appBg.jpg');
 
-  .header {
+  .headerApp {
     padding: 16px 0 0;
   }
 

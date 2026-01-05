@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { LoginForm } from '@/widgets';
-import banner from '@/shared/assets/loginBanner.png';
+import banner from '@/shared/assets/loginBanner.svg';
 </script>
 
 <template>
   <div>
-    <p class="title">Login</p>
+    <p class="title">Log in to your account</p>
     <div class="content">
       <LoginForm />
       <img :src="banner" class="banner" alt="banner" />
@@ -17,7 +17,6 @@ import banner from '@/shared/assets/loginBanner.png';
 .content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .title {
@@ -29,6 +28,9 @@ import banner from '@/shared/assets/loginBanner.png';
 
 .banner {
   width: 400px;
-  transform: scale(1.35);
+  border-radius: 16px;
+  opacity: 0.75;
+  object-fit: cover;
+  object-position: right;
 }
 </style>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { APP_ROUTES } from '@/shared/config';
-import { BaseButton, BaseCheckbox, BaseInput } from '@/shared/ui';
+import { BaseButton, BaseCheckbox, BaseInput, PasswordField } from '@/shared/ui';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const username = ref();
-const email = ref();
+const email = ref('');
+const password = ref('');
 
 const onEnrollmentClick = () => {
   router.push(APP_ROUTES.ENROLLMENT);
@@ -16,11 +16,11 @@ const onEnrollmentClick = () => {
 <template>
   <form class="loginForm">
     <div class="fields">
-      <BaseInput labelValue="Username" v-model="username" />
       <BaseInput labelValue="Email" v-model="email" />
+      <PasswordField labelValue="Password" v-model="password" :isValid="true" />
       <BaseCheckbox :label="'Remember Me'" inputIdValue="rememberMe" />
     </div>
-    <BaseButton value="Login" />
+    <BaseButton value="Login" theme="accent" />
     <BaseButton value="Create Account" theme="secondary" @onClick="onEnrollmentClick" />
     <BaseButton value="Forgot Account" theme="secondary" />
   </form>

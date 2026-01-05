@@ -49,5 +49,23 @@ const {
       color: var(--white-100);
     }
   }
+
+  &.accentTheme {
+    background: var(--gold-100);
+    border: 1px solid var(--gold-100);
+    font-weight: 500;
+
+    &:not(:disabled):hover {
+      background: var(--gold-50);
+      border: 1px solid var(--gold-50);
+      color: var(--white-100);
+    }
+
+    &:not(:disabled):active {
+      background: var(--gold-10);
+      border: 1px solid var(--gold-10);
+      color: var(--white-100);
+    }
+  }
 }
 </style>

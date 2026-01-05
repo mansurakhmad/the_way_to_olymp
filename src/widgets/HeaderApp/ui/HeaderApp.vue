@@ -1,13 +1,9 @@
-<script lang="ts" setup>
-import { ContentContainer } from '@/widgets/ContentContainer';
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <ContentContainer>
     <header class="header">
       <h1 class="title">The Way To Olymp</h1>
     </header>
-  </ContentContainer>
 </template>
 
 <style lang="scss" scoped>
