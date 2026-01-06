@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LoginForm } from '@/widgets';
-import banner from '@/shared/assets/loginBanner.svg';
+import banner from '@/shared/assets/login.jpg';
 </script>
 
 <template>
@@ -31,6 +31,5 @@ import banner from '@/shared/assets/loginBanner.svg';
   border-radius: 16px;
   opacity: 0.75;
   object-fit: cover;
-  object-position: right;
 }
 </style>

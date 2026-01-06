@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { EnrollmentForm } from '@/widgets';
-import banner from '@/shared/assets/enrollmentBannerTransparent.svg';
+import banner from '@/shared/assets/enrollment.jpg';
 </script>
 
 <template>
@@ -23,6 +23,5 @@ import banner from '@/shared/assets/enrollmentBannerTransparent.svg';
   border-radius: 16px;
   opacity: 0.75;
   object-fit: cover;
-  object-position: right;
 }
 </style>
