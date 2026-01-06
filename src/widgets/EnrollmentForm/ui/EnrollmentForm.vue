@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import { sendEnrollmentRequest } from '@/features/enrollment';
-import { BaseAlert, type BaseAlertTypes, BaseButton, BaseInput, PasswordField } from '@/shared/ui';
+import { BaseAlert, BaseButton, BaseInput, PasswordField, useAlert } from '@/shared/ui';
 import { testPattern } from '@/shared/utils';
 import { computed, ref } from 'vue';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../config';
 import { AuthError } from '@supabase/supabase-js';
-import type { EnrollmentFormTypes } from '../models';
 
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const alertData = ref<BaseAlertTypes.AlertData>();
+const { alertData, triggerAlert } = useAlert();
 
 const passwordValuesAreValid = computed(() => {
   if (!confirmPassword.value) return true;
@@ -31,17 +30,6 @@ const emailIsValid = computed(() => {
 const submitButtonDisabled = computed(() => {
   return !email.value || !password.value || !confirmPassword.value || !passwordValuesAreValid.value;
 });
-
-const triggerAlert = ({
-  title,
-  message,
-  closeTime,
-  theme = 'default',
-}: EnrollmentFormTypes.TriggerAlertProps) => {
-  alertData.value = { title, message, theme };
-
-  if (closeTime) setTimeout(() => (alertData.value = undefined), closeTime);
-};
 
 const submitForm = async () => {
   alertData.value = undefined;

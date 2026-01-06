@@ -9,4 +9,8 @@ export namespace BaseAlertTypes {
     isVisible: boolean;
     themeValue?: Theme;
   }
+
+  export interface TriggerAlertProps extends AlertData {
+    closeTime: number;
+  }
 }
