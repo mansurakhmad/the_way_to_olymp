@@ -29,6 +29,8 @@ const isSubmitDisable = computed(() => !email.value || !password.value);
 
 const onEnrollmentClick = () => router.push(APP_ROUTES.ENROLLMENT);
 
+const onForgotPasswordClick = () => router.push(APP_ROUTES.FORGOT_PASSWORD);
+
 const handleEmailInputBlur = () => (emailIsValid.value = true);
 
 const onSubmit = async () => {
@@ -83,7 +85,7 @@ const onSubmit = async () => {
     </div>
     <BaseButton value="Login" theme="accent" type="submit" :disabled="isSubmitDisable" />
     <BaseButton value="Create Account" theme="secondary" @onClick="onEnrollmentClick" />
-    <BaseButton value="Forgot Account" theme="secondary" />
+    <BaseButton value="Forgot Account" theme="secondary" @click="onForgotPasswordClick" />
   </form>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template v-slot:title>{{ alertData?.title }}</template>

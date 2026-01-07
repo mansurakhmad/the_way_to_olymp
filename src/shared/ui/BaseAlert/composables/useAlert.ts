@@ -9,10 +9,15 @@ export const useAlert = () => {
     message,
     closeTime,
     theme = 'default',
+    onClose = () => {},
   }: BaseAlertTypes.TriggerAlertProps) => {
     alertData.value = { title, message, theme };
 
-    if (closeTime) setTimeout(() => (alertData.value = undefined), closeTime);
+    if (closeTime)
+      setTimeout(() => {
+        alertData.value = undefined;
+        onClose();
+      }, closeTime);
   };
 
   return { alertData, triggerAlert };

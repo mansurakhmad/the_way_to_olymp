@@ -7,7 +7,12 @@ import { RouterView, useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-const routesWithSmallContainer = [APP_ROUTERS_NAMES.lOGIN, APP_ROUTERS_NAMES.ENROLLMENT];
+const routesWithSmallContainer = [
+  APP_ROUTERS_NAMES.lOGIN,
+  APP_ROUTERS_NAMES.ENROLLMENT,
+  APP_ROUTERS_NAMES.FORGOT_PASSWORD,
+  APP_ROUTERS_NAMES.CONFIRM,
+];
 
 const sizeValue = computed(() => {
   if (routesWithSmallContainer.includes(route.name as APP_ROUTERS_NAMES)) return 'small';
