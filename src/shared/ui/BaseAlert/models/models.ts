@@ -3,7 +3,7 @@ export namespace BaseAlertTypes {
   export interface AlertData {
     title: string;
     message: string;
-    theme: Theme;
+    theme?: Theme;
   }
   export interface Props {
     isVisible: boolean;
@@ -12,5 +12,6 @@ export namespace BaseAlertTypes {
 
   export interface TriggerAlertProps extends AlertData {
     closeTime: number;
+    onClose?: () => void;
   }
 }
