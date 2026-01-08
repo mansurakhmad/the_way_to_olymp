@@ -104,7 +104,7 @@ const onSubmit = async () => {
     </div>
     <BaseButton value="Login" theme="accent" type="submit" :disabled="isSubmitDisable" />
     <BaseButton value="Create Account" theme="secondary" @onClick="onEnrollmentClick" />
-    <BaseButton value="Forgot Account" theme="secondary" @click="onForgotPasswordClick" />
+    <BaseButton value="Forgot Password" theme="secondary" @click="onForgotPasswordClick" />
   </form>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template #title>{{ alertData?.title }}</template>

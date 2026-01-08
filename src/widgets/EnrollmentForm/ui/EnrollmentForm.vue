@@ -104,8 +104,8 @@ const submitForm = async () => {
     <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />
   </form>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
-    <template #:title>{{ alertData?.title }}</template>
-    <template #:message>{{ alertData?.message }}</template>
+    <template #title>{{ alertData?.title }}</template>
+    <template #message>{{ alertData?.message }}</template>
   </BaseAlert>
 </template>
 

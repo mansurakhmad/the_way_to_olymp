@@ -66,8 +66,8 @@ const submit = async () => {
     <BaseButton value="Submit" type="submit" :disabled="submitButtonIsDisabled" />
   </form>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
-    <template v-slot:title>{{ alertData?.title }}</template>
-    <template v-slot:message>{{ alertData?.message }}</template>
+    <template #title>{{ alertData?.title }}</template>
+    <template #message>{{ alertData?.message }}</template>
   </BaseAlert>
 </template>
 
