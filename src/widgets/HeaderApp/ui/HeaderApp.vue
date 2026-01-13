@@ -1,20 +1,58 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import logo from '@/shared/assets/SmallLogo.svg';
+</script>
 
 <template>
   <header class="header">
-    <h1 class="title">Nexus Fit</h1>
+    <div class="icon">
+      <img :src="logo" class="logo" alt="logo" />
+      <div>
+        <h1 class="title">Nexus</h1>
+        <span class="subTitle">Performance Hub</span>
+      </div>
+    </div>
   </header>
 </template>
 
 <style lang="scss" scoped>
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  padding-left: 64px;
+}
+
+.logo {
+  position: absolute;
+  left: -33px;
+  width: 120px;
+  height: 120px;
+}
+
 .title {
   margin: 0;
-  background: linear-gradient(90deg, #fff 0%, #8b1d36 50%, #fff 100%);
+  background: linear-gradient(90deg, #fff 0%, #32ebee 25%, #8b1d36 50%, #32ebee 75%, #fff 100%);
   background-size: 200% auto;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 30px;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 800;
   text-transform: uppercase;
+  animation: shimmer 4s linear infinite;
+}
+
+.subTitle {
+  background: linear-gradient(90deg, #fff 0%, #32ebee 25%, #8b1d36 50%, #32ebee 75%, #fff 100%);
+  background-size: 200% auto;
+  color: var(--white-100);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   animation: shimmer 4s linear infinite;
 }
 

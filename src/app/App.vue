@@ -1,45 +1,20 @@
 <script setup lang="ts">
-import { api } from '@/shared/api';
-import { APP_ROUTERS_NAMES, APP_ROUTES, KEEP_USER_LOGIN } from '@/shared/config';
+import { computed } from 'vue';
+import { RouterView, useRoute } from 'vue-router';
 import { ContentContainer } from '@/widgets/ContentContainer';
 import { HeaderApp } from '@/widgets/HeaderApp';
-import { computed, onMounted } from 'vue';
-import { RouterView, useRoute, useRouter } from 'vue-router';
-const router = useRouter();
+
 const route = useRoute();
 
-const routesWithSmallContainer = [
-  APP_ROUTERS_NAMES.lOGIN,
-  APP_ROUTERS_NAMES.ENROLLMENT,
-  APP_ROUTERS_NAMES.FORGOT_PASSWORD,
-  APP_ROUTERS_NAMES.CONFIRM,
-  APP_ROUTERS_NAMES.RECOVERY_PASSWORD,
-];
-
-const sizeValue = computed(() => {
-  if (routesWithSmallContainer.includes(route.name as APP_ROUTERS_NAMES)) return 'small';
-
-  return 'normal';
-});
-
-onMounted(() => {
-  api.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_OUT' || (event === 'TOKEN_REFRESHED' && !session) || !session) {
-      console.log('trigger');
-      router.replace(APP_ROUTES.lOGIN);
-
-      localStorage.removeItem(KEEP_USER_LOGIN);
-    }
-  });
-});
+const isOnboardingRoute = computed(() => route.meta.isOnboarding);
 </script>
 
 <template>
-  <div class="app">
-    <ContentContainer class="headerApp" :sizeValue="sizeValue">
+  <div class="app" :class="isOnboardingRoute ? 'onboarding' : 'authorized'">
+    <ContentContainer class="headerApp" :sizeValue="isOnboardingRoute ? 'small' : 'normal'">
       <HeaderApp class="header" />
     </ContentContainer>
-    <ContentContainer class="content" :sizeValue="sizeValue">
+    <ContentContainer class="content" :sizeValue="isOnboardingRoute ? 'small' : 'normal'">
       <RouterView />
     </ContentContainer>
   </div>
@@ -54,7 +29,14 @@ onMounted(() => {
   background-color: var(--wine-100);
   background-size: cover;
   background-repeat: no-repeat;
-  background-image: url('../shared/assets/appBg.jpg');
+
+  &.authorized {
+    background-image: url('../shared/assets/authorizedBg.jpg');
+  }
+
+  &.onboarding {
+    background-image: url('../shared/assets/onboardingBg.jpg');
+  }
 
   .headerApp {
     padding: 16px 0 0;
