@@ -4,7 +4,7 @@ import { BaseButton, WidgetSkeleton } from '@/shared/ui';
 
 <template>
   <div class="mainPage">
-    <WidgetSkeleton theme="Blue" refName="fitnessLab">
+    <WidgetSkeleton theme="Blue">
       <template #title>Fitness Lab</template>
       <template #content>
         <ul>
@@ -18,11 +18,11 @@ import { BaseButton, WidgetSkeleton } from '@/shared/ui';
       </template>
     </WidgetSkeleton>
 
-    <WidgetSkeleton theme="Gold" refName="finTechApp">
+    <WidgetSkeleton theme="Gold">
       <template #title>FinTech App</template>
     </WidgetSkeleton>
 
-    <WidgetSkeleton theme="Red" refName="taskManager">
+    <WidgetSkeleton theme="Red">
       <template #title>Task Manager</template>
     </WidgetSkeleton>
   </div>

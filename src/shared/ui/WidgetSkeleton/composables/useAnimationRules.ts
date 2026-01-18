@@ -1,11 +1,11 @@
 import { getRandomInt } from '@/shared/utils';
-import { onMounted, useTemplateRef } from 'vue';
+import { onMounted, ref } from 'vue';
 
-export const useAnimationRules = (refName: string) => {
-  const leftVerticalLine = useTemplateRef<HTMLElement>(`${refName}leftVerticalLine`);
-  const rightVerticalLine = useTemplateRef<HTMLElement>(`${refName}rightVerticalLine`);
-  const topHorizontalLine = useTemplateRef<HTMLElement>(`${refName}topHorizontalLine`);
-  const bottomHorizontalLine = useTemplateRef<HTMLElement>(`${refName}bottomHorizontalLine`);
+export const useAnimationRules = () => {
+  const leftLine = ref<HTMLElement | null>(null);
+  const rightLine = ref<HTMLElement | null>(null);
+  const topLine = ref<HTMLElement | null>(null);
+  const bottomLine = ref<HTMLElement | null>(null);
 
   onMounted(() => {
     const setAnimationRules = (element: HTMLElement | null | undefined) => {
@@ -15,16 +15,16 @@ export const useAnimationRules = (refName: string) => {
       }
     };
 
-    setAnimationRules(leftVerticalLine.value);
-    setAnimationRules(rightVerticalLine.value);
-    setAnimationRules(topHorizontalLine.value);
-    setAnimationRules(bottomHorizontalLine.value);
+    setAnimationRules(leftLine.value);
+    setAnimationRules(rightLine.value);
+    setAnimationRules(topLine.value);
+    setAnimationRules(bottomLine.value);
   });
 
   return {
-    leftVerticalLine,
-    rightVerticalLine,
-    topHorizontalLine,
-    bottomHorizontalLine,
+    leftLine,
+    rightLine,
+    topLine,
+    bottomLine,
   };
 };

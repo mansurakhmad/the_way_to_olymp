@@ -3,6 +3,5 @@ export namespace WidgetContainerTypes {
 
   export interface Props {
     theme?: Theme;
-    refName: string;
   }
 }

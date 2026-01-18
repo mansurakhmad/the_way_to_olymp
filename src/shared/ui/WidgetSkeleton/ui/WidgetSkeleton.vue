@@ -2,17 +2,17 @@
 import type { WidgetContainerTypes } from '../models';
 import { useAnimationRules } from '../composables';
 
-const { theme = 'Gold', refName } = defineProps<WidgetContainerTypes.Props>();
+const { theme = 'Gold' } = defineProps<WidgetContainerTypes.Props>();
 
-useAnimationRules(refName);
+const linesRefs = useAnimationRules();
 </script>
 
 <template>
   <div class="widgetSkeleton" :class="`widgetTheme${theme}`">
-    <div class="line left" :ref="`${refName}leftVerticalLine`" />
-    <div class="line top" :ref="`${refName}topHorizontalLine`" />
-    <div class="line right" :ref="`${refName}rightVerticalLine`" />
-    <div class="line bottom" :ref="`${refName}bottomHorizontalLine`" />
+    <div class="line left" :ref="linesRefs.leftLine" />
+    <div class="line top" :ref="linesRefs.topLine" />
+    <div class="line right" :ref="linesRefs.rightLine" />
+    <div class="line bottom" :ref="linesRefs.bottomLine" />
     <div class="content">
       <div class="header">
         <p class="title">
