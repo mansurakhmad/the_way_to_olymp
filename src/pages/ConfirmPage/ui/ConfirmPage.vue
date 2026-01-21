@@ -1,8 +1,10 @@
 <script lang="ts" setup>
+import { onMounted } from 'vue';
+
+import { useRouter } from 'vue-router';
+
 import { confirmAfterEnrollment } from '@/features/enrollment';
 import { APP_ROUTES } from '@/shared/config';
-import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 

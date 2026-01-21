@@ -1,9 +1,11 @@
 import { createApp } from 'vue';
-import App from '@/app/App.vue';
-import PrimeVue from 'primevue/config';
-import { router } from '@/app/router';
+
 import Aura from '@primeuix/themes/aura';
 import { createPinia } from 'pinia';
+import PrimeVue from 'primevue/config';
+
+import App from '@/app/App.vue';
+import { router } from '@/app/router';
 import '@/app/styles/index.css';
 
 const pinia = createPinia();
