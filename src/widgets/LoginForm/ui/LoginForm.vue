@@ -13,6 +13,7 @@ import { testPattern } from '@/shared/utils';
 import { AuthError } from '@supabase/supabase-js';
 import { computed, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import Dialog from 'primevue/dialog';
 
 const router = useRouter();
 const route = useRoute();
@@ -20,6 +21,7 @@ const email = ref('');
 const password = ref('');
 const emailIsValid = ref(true);
 const rememberMeIsActive = ref(false);
+const loading = ref(false);
 const { alertData, triggerAlert } = useAlert();
 
 watch(rememberMeIsActive, newValue => {
@@ -67,6 +69,8 @@ const onSubmit = async () => {
   }
 
   try {
+    loading.value = true;
+
     await sendLoginRequest({ email: email.value, password: password.value });
 
     router.replace(APP_ROUTES.MAIN);
@@ -86,6 +90,8 @@ const onSubmit = async () => {
         closeTime: 5000,
       });
     }
+  } finally {
+    loading.value = false;
   }
 };
 </script>
@@ -110,6 +116,14 @@ const onSubmit = async () => {
     <template #title>{{ alertData?.title }}</template>
     <template #message>{{ alertData?.message }}</template>
   </BaseAlert>
+  <Dialog
+    modal
+    :closable="false"
+    v-model:visible="loading"
+    style="background-color: transparent; border: none;"
+  >
+    <span class="loader"></span>
+  </Dialog>
 </template>
 
 <style lang="scss" scoped>
@@ -131,4 +145,34 @@ const onSubmit = async () => {
     gap: 32px;
   }
 }
+
+.loader {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(0deg, var(--gold-10) 33%, var(--red-50) 100%);
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  background: var(--gray-10);
+  border-radius: 50%;
+  content: '';
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg)}
+}
+
 </style>

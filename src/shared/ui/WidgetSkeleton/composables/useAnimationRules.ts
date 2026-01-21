@@ -10,7 +10,7 @@ export const useAnimationRules = () => {
   onMounted(() => {
     const setAnimationRules = (element: HTMLElement | null | undefined) => {
       if (element) {
-        element.style.animationDuration = `${getRandomInt(3, 8)}s`;
+        element.style.animationDuration = `${getRandomInt(3, 10)}s`;
         element.style.animationDirection = getRandomInt(0, 1) === 1 ? 'reverse' : '';
       }
     };

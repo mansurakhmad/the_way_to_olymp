@@ -14,11 +14,11 @@ body {
 }
 
 body {
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
   background-color: var(--black-100);
   color: var(--gray-100);
-  font-family: 'Montserrat', sans-serif;
+  font-family: Montserrat, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1 {
@@ -64,9 +64,9 @@ a {
 }
 
 button {
+  padding: 0;
   background: none;
   border: none;
-  padding: 0;
-  cursor: pointer;
   color: inherit;
+  cursor: pointer;
 }
