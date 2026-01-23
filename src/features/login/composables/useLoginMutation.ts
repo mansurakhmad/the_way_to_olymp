@@ -16,5 +16,10 @@ export const useLoginMutation = () => {
     },
   });
 
-  return { mutate, data, error, isPending };
+  return {
+    isPending,
+    login: mutate,
+    userData: data,
+    loginError: error,
+  };
 };

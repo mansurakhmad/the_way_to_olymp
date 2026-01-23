@@ -23,18 +23,18 @@ const email = ref('');
 const password = ref('');
 const emailIsValid = ref(true);
 const rememberMeIsActive = ref(false);
-const { mutate, isPending, error } = useLoginMutation();
+const { login, isPending, loginError } = useLoginMutation();
 const { alertData, triggerAlert } = useAlert();
 
 watch(rememberMeIsActive, newValue => {
   localStorage.setItem(KEEP_USER_LOGIN, JSON.stringify(newValue));
 });
 
-watch(error, newErrorData => {
-  if (newErrorData instanceof AuthError) {
+watch(loginError, newLoginError => {
+  if (newLoginError instanceof AuthError) {
     triggerAlert({
-      title: newErrorData.name,
-      message: newErrorData.message,
+      title: newLoginError.name,
+      message: newLoginError.message,
       theme: 'error',
       closeTime: 5000,
     });
@@ -81,7 +81,7 @@ const onSubmit = () => {
     return;
   }
 
-  mutate({ email: email.value, password: password.value });
+  login({ email: email.value, password: password.value });
 };
 </script>
 
