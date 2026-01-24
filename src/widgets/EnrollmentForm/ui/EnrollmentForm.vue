@@ -1,24 +1,20 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import { sendEnrollmentRequest } from '@/features/enrollment';
-import { BaseAlert, BaseButton, BaseInput, PasswordField, useAlert } from '@/shared/ui';
-import { testPattern } from '@/shared/utils';
-import { AuthError } from '@supabase/supabase-js';
+import { computed, ref, watchEffect } from 'vue';
+
+import { useEnrollment } from '@/features/enrollment';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/shared/config';
+import { BaseAlert, BaseButton, BaseInput, PasswordField } from '@/shared/ui';
+import { testPattern } from '@/shared/utils';
 
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const { alertData, triggerAlert } = useAlert();
+const { enroll, alertData, isSuccess } = useEnrollment();
 
 const passwordValuesAreValid = computed(() => {
   if (!confirmPassword.value) return true;
 
-  if (password.value === confirmPassword.value && testPattern(password.value, PASSWORD_REGEX)) {
-    return true;
-  }
-
-  return false;
+  return password.value === confirmPassword.value && testPattern(password.value, PASSWORD_REGEX);
 });
 
 const emailIsValid = computed(() => {
@@ -31,52 +27,18 @@ const submitButtonDisabled = computed(() => {
   return !email.value || !password.value || !confirmPassword.value || !passwordValuesAreValid.value;
 });
 
-const submitForm = async () => {
-  alertData.value = undefined;
+const submitForm = () => {
+  alertData.value = null;
+  enroll({ email: email.value, password: password.value });
+};
 
-  try {
-    const response = await sendEnrollmentRequest({ email: email.value, password: password.value });
-    console.log(response.user?.app_metadata);
-
-    if (!response.user?.user_metadata?.email) {
-      triggerAlert({
-        title: 'Registration error',
-        message: `Email already exist`,
-        theme: 'error',
-        closeTime: 5000,
-      });
-
-      return;
-    }
-
-    triggerAlert({
-      title: 'Registration was successful!',
-      message: `Check your email: ${email.value}`,
-      theme: 'default',
-      closeTime: 5000,
-    });
-
+watchEffect(() => {
+  if (isSuccess.value) {
     email.value = '';
     password.value = '';
     confirmPassword.value = '';
-  } catch (error: unknown) {
-    if (error instanceof AuthError) {
-      triggerAlert({
-        title: error.name,
-        message: error.message,
-        theme: 'error',
-        closeTime: 5000,
-      });
-    } else {
-      triggerAlert({
-        title: 'Something went wrong',
-        message: 'Check logs',
-        theme: 'error',
-        closeTime: 5000,
-      });
-    }
   }
-};
+});
 </script>
 
 <template>

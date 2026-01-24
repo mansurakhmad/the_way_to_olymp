@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 
-import { AuthError } from '@supabase/supabase-js';
 import Dialog from 'primevue/dialog';
 import { useRouter, useRoute } from 'vue-router';
 
-import { useLoginMutation } from '@/features/login';
+import { useLogin } from '@/features/login';
 import { APP_ROUTES, EMAIL_REGEX, KEEP_USER_LOGIN } from '@/shared/config';
 import {
   BaseAlert,
@@ -23,29 +22,12 @@ const email = ref('');
 const password = ref('');
 const emailIsValid = ref(true);
 const rememberMeIsActive = ref(false);
-const { login, isPending, loginError } = useLoginMutation();
+const { login, isPending, loginAlertData } = useLogin();
 const { alertData, triggerAlert } = useAlert();
+const alertDataToShow = computed(() => alertData.value || loginAlertData.value);
 
 watch(rememberMeIsActive, newValue => {
   localStorage.setItem(KEEP_USER_LOGIN, JSON.stringify(newValue));
-});
-
-watch(loginError, newLoginError => {
-  if (newLoginError instanceof AuthError) {
-    triggerAlert({
-      title: newLoginError.name,
-      message: newLoginError.message,
-      theme: 'error',
-      closeTime: 5000,
-    });
-  } else {
-    triggerAlert({
-      title: 'Something went wrong',
-      message: 'Check logs',
-      theme: 'error',
-      closeTime: 5000,
-    });
-  }
 });
 
 watch(
@@ -69,6 +51,9 @@ watch(
 const isSubmitDisable = computed(() => !email.value || !password.value);
 
 const onSubmit = () => {
+  alertData.value = null;
+  loginAlertData.value = null;
+
   if (!testPattern(email.value, EMAIL_REGEX)) {
     triggerAlert({
       title: 'Invalid Email',
@@ -109,9 +94,13 @@ const onSubmit = () => {
       @click="$router.push(APP_ROUTES.FORGOT_PASSWORD)"
     />
   </form>
-  <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
-    <template #title>{{ alertData?.title }}</template>
-    <template #message>{{ alertData?.message }}</template>
+  <BaseAlert
+    v-if="alertDataToShow"
+    :isVisible="!!alertDataToShow"
+    :themeValue="alertDataToShow?.theme"
+  >
+    <template #title>{{ alertDataToShow.title }}</template>
+    <template #message>{{ alertDataToShow.message }}</template>
   </BaseAlert>
   <Dialog
     modal

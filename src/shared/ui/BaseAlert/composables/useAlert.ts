@@ -1,8 +1,9 @@
 import { ref } from 'vue';
+
 import type { BaseAlertTypes } from '../models';
 
 export const useAlert = () => {
-  const alertData = ref<BaseAlertTypes.AlertData>();
+  const alertData = ref<BaseAlertTypes.AlertData | null>(null);
 
   const triggerAlert = ({
     title,
@@ -15,7 +16,7 @@ export const useAlert = () => {
 
     if (closeTime)
       setTimeout(() => {
-        alertData.value = undefined;
+        alertData.value = null;
         onClose();
       }, closeTime);
   };

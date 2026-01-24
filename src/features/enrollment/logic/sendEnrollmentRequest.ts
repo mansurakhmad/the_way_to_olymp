@@ -1,14 +1,22 @@
-import { APP_ROUTES } from '@/shared/config';
-import { api } from '@/shared/api';
 import type { Enrollment } from '../models';
 
-export const sendEnrollmentRequest = async (dataToServer: Enrollment.BodyData) => {
+import { api } from '@/shared/api';
+import { APP_ROUTES } from '@/shared/config';
+
+export const sendEnrollmentRequest = async (bodyData: Enrollment.BodyData) => {
   const { data, error } = await api.auth.signUp({
-    ...dataToServer,
+    ...bodyData,
     options: { emailRedirectTo: `${window.location.origin}${APP_ROUTES.CONFIRM}` },
   });
-  
+
   if (error) throw error;
+
+  if (!data.user?.user_metadata.email) {
+    throw {
+      name: 'Registration error',
+      message: `Email already exist`,
+    };
+  }
 
   return data;
 };
