@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, watchEffect } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useEnrollment } from '@/features/enrollment';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/shared/config';
@@ -9,7 +9,7 @@ import { testPattern } from '@/shared/utils';
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const { enroll, alertData, isSuccess } = useEnrollment();
+const { enroll, alertData } = useEnrollment(email, password, confirmPassword);
 
 const passwordValuesAreValid = computed(() => {
   if (!confirmPassword.value) return true;
@@ -31,14 +31,6 @@ const submitForm = () => {
   alertData.value = null;
   enroll({ email: email.value, password: password.value });
 };
-
-watchEffect(() => {
-  if (isSuccess.value) {
-    email.value = '';
-    password.value = '';
-    confirmPassword.value = '';
-  }
-});
 </script>
 
 <template>

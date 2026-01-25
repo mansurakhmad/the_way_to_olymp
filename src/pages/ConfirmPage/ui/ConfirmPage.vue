@@ -4,15 +4,18 @@ import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { confirmAfterEnrollment } from '@/features/enrollment';
-import { APP_ROUTES } from '@/shared/config';
+import { APP_ROUTERS_NAMES, APP_ROUTES } from '@/shared/config';
 
 const router = useRouter();
 
 onMounted(async () => {
-  const isConfirmed = await confirmAfterEnrollment();
+  const emailValue = await confirmAfterEnrollment();
 
-  if (isConfirmed) {
-    router.push(APP_ROUTES.MAIN);
+  if (emailValue) {
+    router.push({
+      path: APP_ROUTES.lOGIN,
+      query: { email: emailValue, from: APP_ROUTERS_NAMES.CONFIRM },
+    });
     return;
   }
 

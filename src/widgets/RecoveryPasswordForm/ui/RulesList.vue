@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Card } from 'primevue';
 import { computed } from 'vue';
+
+import { Card } from 'primevue';
 
 const { password } = defineProps<{ password: string }>();
 

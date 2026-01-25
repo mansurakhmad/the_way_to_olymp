@@ -1,18 +1,17 @@
 <script setup lang="ts">
-import { APP_ROUTES, PASSWORD_REGEX } from '@/shared/config';
-import { BaseAlert, PasswordField, useAlert } from '@/shared/ui';
+import { computed, ref } from 'vue';
+
+import RulesList from './RulesList.vue';
+
+import { useRecoveryPassword } from '@/features/recoveryPassword';
+import { PASSWORD_REGEX } from '@/shared/config';
+import { BaseAlert, PasswordField } from '@/shared/ui';
 import { BaseButton } from '@/shared/ui';
 import { testPattern } from '@/shared/utils';
-import { computed, ref } from 'vue';
-import RulesList from './RulesList.vue';
-import { sendRestorePasswordRequest } from '@/features/restorePassword';
-import { AuthError } from '@supabase/supabase-js';
-import { useRouter } from 'vue-router';
 
 const password = ref('');
 const confirmPassword = ref('');
-const router = useRouter();
-const { alertData, triggerAlert } = useAlert();
+const { recoveryPassword, alertData } = useRecoveryPassword();
 
 const passwordValuesAreValid = computed(() => {
   if (!confirmPassword.value) return true;
@@ -28,30 +27,7 @@ const submitButtonIsDisabled = computed(() => {
   return !password.value || !confirmPassword.value || !passwordValuesAreValid.value;
 });
 
-const submit = async () => {
-  try {
-    const response = await sendRestorePasswordRequest(password.value);
-    router.replace({ path: APP_ROUTES.lOGIN, query: { email: `${response.user.email}` } });
-  } catch (error) {
-    if (error instanceof AuthError) {
-      triggerAlert({
-        title: error.name,
-        message: error.message,
-        closeTime: 2000,
-        theme: 'error',
-      });
-
-      return;
-    }
-
-    triggerAlert({
-      title: 'Something went wrong',
-      message: 'Check logs',
-      closeTime: 2000,
-      theme: 'error',
-    });
-  }
-};
+const submit = () => recoveryPassword(password.value);
 </script>
 
 <template>
