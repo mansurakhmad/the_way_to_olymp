@@ -5,7 +5,7 @@ import Dialog from 'primevue/dialog';
 import { useRouter, useRoute } from 'vue-router';
 
 import { useLogin } from '@/features/login';
-import { APP_ROUTES, EMAIL_REGEX, KEEP_USER_LOGIN } from '@/shared/config';
+import { APP_ROUTERS_NAMES, APP_ROUTES, EMAIL_REGEX, KEEP_USER_LOGIN } from '@/shared/config';
 import {
   BaseAlert,
   BaseButton,
@@ -31,16 +31,18 @@ watch(rememberMeIsActive, newValue => {
 });
 
 watch(
-  () => route.query.email,
-  emailValue => {
-    if (emailValue && !Array.isArray(emailValue)) {
-      email.value = emailValue;
+  () => route.query,
+  routeData => {
+    if (routeData.email && !Array.isArray(routeData.email)) {
+      email.value = routeData.email;
 
-      triggerAlert({
-        title: 'Success!',
-        message: 'Password updated successfully.',
-        closeTime: 4000,
-      });
+      if (routeData.from === APP_ROUTERS_NAMES.RECOVERY_PASSWORD) {
+        triggerAlert({
+          title: 'Success!',
+          message: 'Password updated successfully.',
+          closeTime: 4000,
+        });
+      }
 
       router.replace({ query: {} });
     }

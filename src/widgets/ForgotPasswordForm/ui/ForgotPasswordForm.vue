@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { sendForgotPasswordRequest } from '@/features/forgotPassword';
-import { APP_ROUTES, EMAIL_REGEX } from '@/shared/config';
-import { BaseButton, BaseInput, useAlert, BaseAlert } from '@/shared/ui';
-import { testPattern } from '@/shared/utils';
-import { AuthError } from '@supabase/supabase-js';
 import { computed, ref } from 'vue';
+
 import { useRouter } from 'vue-router';
 
-const email = ref();
+import { useForgotPassword } from '@/features/forgotPassword';
+import { EMAIL_REGEX } from '@/shared/config';
+import { BaseButton, BaseInput, BaseAlert } from '@/shared/ui';
+import { testPattern } from '@/shared/utils';
+
+const email = ref('');
 const router = useRouter();
-const { alertData, triggerAlert } = useAlert();
+const { mutate, alertData } = useForgotPassword(email);
+
 const emailIsValid = computed(() => {
   if (!email.value) return true;
 
@@ -18,37 +20,7 @@ const emailIsValid = computed(() => {
 
 const submitIsDisable = computed(() => !email.value || !emailIsValid.value);
 
-const submit = async () => {
-  try {
-    await sendForgotPasswordRequest(email.value);
-    triggerAlert({
-      title: `Check ${email.value} address`,
-      message: `If you don't see the email within a few minutes, please check your spam folder.`,
-      closeTime: 5000,
-      onClose: () => router.replace(APP_ROUTES.lOGIN),
-    });
-    email.value = '';
-  } catch (error) {
-    email.value = '';
-    if (error instanceof AuthError) {
-      triggerAlert({
-        title: error.name,
-        message: error.message,
-        closeTime: 2000,
-        theme: 'error',
-      });
-
-      return;
-    }
-
-    triggerAlert({
-      title: 'Something went wrong',
-      message: 'Check logs',
-      closeTime: 2000,
-      theme: 'error',
-    });
-  }
-};
+const submit = () => mutate();
 </script>
 
 <template>

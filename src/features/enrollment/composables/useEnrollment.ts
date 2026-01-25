@@ -1,13 +1,29 @@
+import type { Ref } from 'vue';
+
 import { useMutation } from '@tanstack/vue-query';
+import { useRouter } from 'vue-router';
 
 import { sendEnrollmentRequest } from '../logic';
 
 import type { Enrollment } from '../models';
 
+import { APP_ROUTERS_NAMES, APP_ROUTES } from '@/shared/config';
 import { useAlert } from '@/shared/ui';
 
-export const useEnrollment = () => {
+export const useEnrollment = (
+  emailRef: Ref<string>,
+  passwordRef: Ref<string>,
+  confirmPasswordRef: Ref<string>
+) => {
+  const router = useRouter();
   const { alertData, triggerAlert } = useAlert();
+
+  const clearFormFields = () => {
+    emailRef.value = '';
+    passwordRef.value = '';
+    confirmPasswordRef.value = '';
+  };
+
   const { mutate, isPending, data, error, isSuccess } = useMutation({
     mutationFn: (bodyData: Enrollment.BodyData) => sendEnrollmentRequest(bodyData),
     onSuccess: data => {
@@ -15,8 +31,19 @@ export const useEnrollment = () => {
         title: 'Registration was successful!',
         message: `Check your email: ${data.user?.user_metadata?.email}`,
         theme: 'default',
-        closeTime: 5000,
+        closeTime: 4000,
+        onClose: () => {
+          router.push({
+            path: APP_ROUTES.lOGIN,
+            query: {
+              email: `${data.user?.user_metadata?.email}`,
+              from: APP_ROUTERS_NAMES.ENROLLMENT,
+            },
+          });
+        },
       });
+
+      clearFormFields();
     },
     onError: error => {
       triggerAlert({
@@ -25,6 +52,8 @@ export const useEnrollment = () => {
         theme: 'error',
         closeTime: 5000,
       });
+
+      clearFormFields();
     },
   });
 
