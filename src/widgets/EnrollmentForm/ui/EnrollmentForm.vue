@@ -48,14 +48,16 @@ const submitForm = () => {
       v-model="confirmPassword"
       :isValid="passwordValuesAreValid"
     />
-    <BaseButton
-      value="Create Account"
-      class="button"
-      type="submit"
-      theme="accent"
-      :disabled="submitButtonDisabled"
-    />
-    <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />
+    <div class="buttons">
+      <BaseButton
+        value="Create Account"
+        class="button"
+        type="submit"
+        theme="accent"
+        :disabled="submitButtonDisabled"
+      />
+      <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />
+    </div>
   </form>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template #title>{{ alertData?.title }}</template>
@@ -67,11 +69,16 @@ const submitForm = () => {
 .enrollmentForm {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  padding: 32px 12px;
+  gap: 48px;
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
   color: var(--black-100);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 </style>

@@ -90,8 +90,8 @@ const onSubmit = () => {
         @blur="emailIsValid = true"
       />
       <PasswordField labelValue="Password" v-model="password" :isValid="true" />
-      <BaseCheckbox :label="'Remember Me'" inputIdValue="rememberMe" v-model="rememberMeIsActive" />
     </div>
+    <BaseCheckbox :label="'Remember Me'" inputIdValue="rememberMe" v-model="rememberMeIsActive" />
     <BaseButton value="Login" theme="accent" type="submit" :disabled="isSubmitDisable" />
     <BaseButton
       value="Create Account"
@@ -127,7 +127,6 @@ const onSubmit = () => {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 32px 12px;
   width: 100%;
   max-width: 400px;
   border-radius: 12px;
@@ -136,7 +135,7 @@ const onSubmit = () => {
   .fields {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 44px;
   }
 }
 

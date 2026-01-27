@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 
-import { useRoute } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 
 import logo from '@/shared/assets/SmallLogo.svg';
+import { APP_ROUTES } from '@/shared/config';
 
 const route = useRoute();
 
@@ -12,14 +13,14 @@ const isOnboarding = computed(() => route.meta.isOnboarding);
 
 <template>
   <header class="header">
-    <div class="icon">
+    <RouterLink :to="isOnboarding ? APP_ROUTES.lOGIN : APP_ROUTES.MAIN" class="icon">
       <img :src="logo" class="logo" alt="logo" />
       <div>
         <h1 class="title">Nexus</h1>
         <span class="subTitle" v-if="isOnboarding">Ready to work?</span>
         <span class="subTitle" v-else>Performance Hub</span>
       </div>
-    </div>
+    </RouterLink>
   </header>
 </template>
 

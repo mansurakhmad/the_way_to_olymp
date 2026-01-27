@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { BaseCheckboxTypes } from '../models';
 import { Checkbox } from 'primevue';
+
+import type { BaseCheckboxTypes } from '../models';
 
 const { label, inputIdValue } = defineProps<BaseCheckboxTypes.Props>();
 const checked = defineModel<boolean>();

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
+import InputText from 'primevue/inputtext';
+
 import type { BaseInputTypes } from '../models';
 
 const { labelValue, isValid, errorMessage } = defineProps<BaseInputTypes.Props>();
@@ -35,10 +36,22 @@ const model = defineModel<string>();
     }
   }
 
+  &:has(input[aria-invalid='true']) {
+    label {
+      color: var(--red-50);
+      font-weight: 500;
+    }
+  }
+
   .errorMessage {
+    position: absolute;
+    left: 0;
+    width: 100%;
     color: var(--red-50);
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 14px;
+    text-align: center;
     padding-top: 12px;
   }
 }

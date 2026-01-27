@@ -38,17 +38,20 @@ const isOnboardingRoute = computed(() => route.meta.isOnboarding);
   padding: 0 8px;
   height: 100vh;
   background-color: var(--black-150);
-  background-image: url('../shared/assets/bg.jpg');
+  background-image: url('../shared/assets/outer-space-background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: left;
   overflow: hidden;
 
   .content {
+    position: relative;
+    z-index: 2;
     display: flex;
     justify-content: center;
     padding: 0;
-    margin-top: 40px;
     text-align: center;
+    margin-top: 40px;
 
     &.onboarding > *:first-child {
       width: 375px;
@@ -62,6 +65,7 @@ const isOnboardingRoute = computed(() => route.meta.isOnboarding);
 
 .planet {
   position: absolute;
+  z-index: 1;
   top: 50%;
   left: 50%;
   width: 100%;

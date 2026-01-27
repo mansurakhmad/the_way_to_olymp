@@ -48,7 +48,6 @@ const submit = () => mutate();
   flex-direction: column;
   justify-content: space-between;
   gap: 32px;
-  padding: 32px 12px;
   width: 100%;
   max-width: 400px;
   border-radius: 12px;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { FloatLabel, Password } from 'primevue';
+
 import type { PasswordFieldTypes } from '../models';
 
 const modelValue = defineModel<string>();
@@ -45,9 +46,17 @@ const { labelValue, isValid, errorMessage } = defineProps<PasswordFieldTypes.Pro
     }
   }
 
+  &:has(input[aria-invalid='true']) {
+    label {
+      color: var(--red-50);
+      font-weight: 500;
+    }
+  }
+
   .errorMessage {
     color: var(--red-50);
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 14px;
     padding-top: 12px;
   }

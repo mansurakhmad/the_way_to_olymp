@@ -3,7 +3,7 @@ import { LoginForm } from '@/widgets/LoginForm';
 </script>
 
 <template>
-  <div>
+  <div class="loginPage">
     <h2 class="title">Log in to your account</h2>
     <div class="content">
       <LoginForm />
@@ -12,6 +12,12 @@ import { LoginForm } from '@/widgets/LoginForm';
 </template>
 
 <style lang="scss" scoped>
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
 .content {
   display: flex;
   justify-content: space-between;
@@ -21,7 +27,6 @@ import { LoginForm } from '@/widgets/LoginForm';
   font-size: 24px;
   font-weight: 500;
   line-height: 30px;
-  margin-bottom: 24px;
 }
 
 .banner {
