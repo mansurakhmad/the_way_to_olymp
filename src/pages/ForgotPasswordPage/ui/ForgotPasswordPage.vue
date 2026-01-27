@@ -4,7 +4,9 @@ import { ForgotPasswordForm } from '@/widgets/ForgotPasswordForm';
 
 <template>
   <div class="forgotPasswordPage">
-    <h2>Forgot Password</h2>
+    <Transition name="slide-down" appear>
+      <h2>Forgot Password</h2>
+    </Transition>
     <ForgotPasswordForm />
   </div>
 </template>
@@ -15,5 +17,14 @@ import { ForgotPasswordForm } from '@/widgets/ForgotPasswordForm';
   flex-direction: column;
   align-items: center;
   gap: 44px;
+}
+
+.slide-down-enter-from {
+  transform: translateY(-200%);
+  opacity: 0;
+}
+
+.slide-down-enter-active {
+  transition: all 0.5s ease-in-out;
 }
 </style>

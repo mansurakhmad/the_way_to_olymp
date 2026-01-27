@@ -34,31 +34,33 @@ const submitForm = () => {
 </script>
 
 <template>
-  <form class="enrollmentForm" @submit.prevent="submitForm">
-    <BaseInput
-      labelValue="Email"
-      v-model="email"
-      :isValid="emailIsValid"
-      errorMessage="Invalid email"
-    />
-    <PasswordField labelValue="Password" v-model="password" :isValid="passwordValuesAreValid" />
-    <PasswordField
-      labelValue="Confirm password"
-      errorMessage="Invalid password. Requirements: A-Z, 0-9, and !#%$"
-      v-model="confirmPassword"
-      :isValid="passwordValuesAreValid"
-    />
-    <div class="buttons">
-      <BaseButton
-        value="Create Account"
-        class="button"
-        type="submit"
-        theme="accent"
-        :disabled="submitButtonDisabled"
+  <Transition name="slide-up" appear>
+    <form class="enrollmentForm" @submit.prevent="submitForm">
+      <BaseInput
+        labelValue="Email"
+        v-model="email"
+        :isValid="emailIsValid"
+        errorMessage="Invalid email"
       />
-      <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />
-    </div>
-  </form>
+      <PasswordField labelValue="Password" v-model="password" :isValid="passwordValuesAreValid" />
+      <PasswordField
+        labelValue="Confirm password"
+        errorMessage="Invalid password. Requirements: A-Z, 0-9, and !#%$"
+        v-model="confirmPassword"
+        :isValid="passwordValuesAreValid"
+      />
+      <div class="buttons">
+        <BaseButton
+          value="Create Account"
+          class="button"
+          type="submit"
+          theme="accent"
+          :disabled="submitButtonDisabled"
+        />
+        <BaseButton value="Back" class="button" theme="secondary" @onClick="$router.back()" />
+      </div>
+    </form>
+  </Transition>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template #title>{{ alertData?.title }}</template>
     <template #message>{{ alertData?.message }}</template>
@@ -80,5 +82,14 @@ const submitForm = () => {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.slide-up-enter-active {
+  transition: all 0.85s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(50%);
 }
 </style>

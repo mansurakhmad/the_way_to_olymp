@@ -13,23 +13,25 @@ const isOnboarding = computed(() => route.meta.isOnboarding);
 
 <template>
   <header class="header">
-    <RouterLink :to="isOnboarding ? APP_ROUTES.lOGIN : APP_ROUTES.MAIN" class="icon">
-      <img :src="logo" class="logo" alt="logo" />
-      <div>
-        <h1 class="title">Nexus</h1>
-        <span class="subTitle" v-if="isOnboarding">Ready to work?</span>
-        <span class="subTitle" v-else>Performance Hub</span>
-      </div>
-    </RouterLink>
+    <Transition name="fade" appear>
+      <RouterLink :to="isOnboarding ? APP_ROUTES.lOGIN : APP_ROUTES.MAIN" class="icon">
+        <img :src="logo" class="logo" alt="logo" />
+        <div>
+          <h1 class="title">Nexus</h1>
+          <span class="subTitle" v-if="isOnboarding">Ready to work?</span>
+          <span class="subTitle" v-else>Performance Hub</span>
+        </div>
+      </RouterLink>
+    </Transition>
   </header>
 </template>
 
 <style lang="scss" scoped>
 .icon {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
+  width: max-content;
   overflow: hidden;
   padding-left: 64px;
 }
@@ -64,6 +66,14 @@ const isOnboarding = computed(() => route.meta.isOnboarding);
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: shimmer 4s linear infinite;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 1s ease;
 }
 
 @keyframes shimmer {

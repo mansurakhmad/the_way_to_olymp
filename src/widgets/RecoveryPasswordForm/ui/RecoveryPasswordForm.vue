@@ -31,16 +31,22 @@ const submit = () => recoveryPassword(password.value);
 </script>
 
 <template>
-  <form class="recoveryPasswordForm" @submit.prevent="submit">
-    <RulesList :password="password" />
-    <PasswordField labelValue="New password" :isValid="passwordValuesAreValid" v-model="password" />
-    <PasswordField
-      labelValue="Repeat new password"
-      :isValid="passwordValuesAreValid"
-      v-model="confirmPassword"
-    />
-    <BaseButton value="Submit" type="submit" :disabled="submitButtonIsDisabled" />
-  </form>
+  <Transition name="slide-up" appear>
+    <form class="recoveryPasswordForm" @submit.prevent="submit">
+      <RulesList :password="password" />
+      <PasswordField
+        labelValue="New password"
+        :isValid="passwordValuesAreValid"
+        v-model="password"
+      />
+      <PasswordField
+        labelValue="Repeat new password"
+        :isValid="passwordValuesAreValid"
+        v-model="confirmPassword"
+      />
+      <BaseButton value="Submit" type="submit" :disabled="submitButtonIsDisabled" />
+    </form>
+  </Transition>
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template #title>{{ alertData?.title }}</template>
     <template #message>{{ alertData?.message }}</template>
@@ -57,5 +63,14 @@ const submit = () => recoveryPassword(password.value);
   max-width: 400px;
   border-radius: 12px;
   color: var(--black-100);
+}
+
+.slide-up-enter-active {
+  transition: all 0.85s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(50%);
 }
 </style>

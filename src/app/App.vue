@@ -15,7 +15,9 @@ const isOnboardingRoute = computed(() => route.meta.isOnboarding);
 
 <template>
   <div class="app" :class="isOnboardingRoute ? 'onboarding' : 'authorized'">
-    <img :src="planet" alt="planner" class="planet" />
+    <Transition name="fade" appear>
+      <img :src="planet" alt="planner" class="planet" />
+    </Transition>
     <ContentContainer class="headerApp" :sizeValue="isOnboardingRoute ? 'small' : 'normal'">
       <HeaderApp class="header" />
     </ContentContainer>
@@ -59,6 +61,8 @@ const isOnboardingRoute = computed(() => route.meta.isOnboarding);
   }
 
   .headerApp {
+    position: relative;
+    z-index: 3;
     padding: 16px 0 0;
   }
 }
@@ -71,7 +75,15 @@ const isOnboardingRoute = computed(() => route.meta.isOnboarding);
   width: 100%;
   height: 100%;
   transform: translate(-50%, -50%);
-  animation: rotate-planet 60s linear infinite;
+  animation: rotate-planet 60s linear 2.6s infinite;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 2.5s ease-in;
 }
 
 @keyframes rotate-planet {

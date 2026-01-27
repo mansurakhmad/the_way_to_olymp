@@ -24,18 +24,21 @@ const submit = () => mutate();
 </script>
 
 <template>
-  <form class="forgotPasswordForm" @submit.prevent="submit">
-    <BaseInput
-      labelValue="Email"
-      v-model="email"
-      :isValid="emailIsValid"
-      errorMessage="Invalid format"
-    />
-    <div class="buttons">
-      <BaseButton value="Submit" theme="accent" type="submit" :disabled="submitIsDisable" />
-      <BaseButton value="Back" theme="secondary" @click="router.back()" />
-    </div>
-  </form>
+  <Transition name="slide-up" appear>
+    <form class="forgotPasswordForm" @submit.prevent="submit">
+      <BaseInput
+        labelValue="Email"
+        v-model="email"
+        :isValid="emailIsValid"
+        errorMessage="Invalid format"
+      />
+      <div class="buttons">
+        <BaseButton value="Submit" theme="accent" type="submit" :disabled="submitIsDisable" />
+        <BaseButton value="Back" theme="secondary" @click="router.back()" />
+      </div>
+    </form>
+  </Transition>
+
   <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
     <template #title>{{ alertData?.title }}</template>
     <template #message>{{ alertData?.message }}</template>
@@ -58,5 +61,14 @@ const submit = () => mutate();
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.slide-up-enter-active {
+  transition: all 0.85s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(50%);
 }
 </style>

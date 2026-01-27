@@ -4,7 +4,9 @@ import { LoginForm } from '@/widgets/LoginForm';
 
 <template>
   <div class="loginPage">
-    <h2 class="title">Log in to your account</h2>
+    <Transition name="slide-down" appear>
+      <h2 class="title">Log in to your account</h2>
+    </Transition>
     <div class="content">
       <LoginForm />
     </div>
@@ -34,5 +36,14 @@ import { LoginForm } from '@/widgets/LoginForm';
   border-radius: 16px;
   opacity: 0.75;
   object-fit: cover;
+}
+
+.slide-down-enter-from {
+  transform: translateY(-200%);
+  opacity: 0;
+}
+
+.slide-down-enter-active {
+  transition: all 0.5s ease-in-out;
 }
 </style>

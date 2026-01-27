@@ -81,29 +81,31 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <form class="loginForm" @submit.prevent="onSubmit">
-    <div class="fields">
-      <BaseInput
-        labelValue="Email"
-        v-model="email"
-        :isValid="emailIsValid"
-        @blur="emailIsValid = true"
+  <Transition name="slide-up" appear>
+    <form class="loginForm" @submit.prevent="onSubmit">
+      <div class="fields">
+        <BaseInput
+          labelValue="Email"
+          v-model="email"
+          :isValid="emailIsValid"
+          @blur="emailIsValid = true"
+        />
+        <PasswordField labelValue="Password" v-model="password" :isValid="true" />
+      </div>
+      <BaseCheckbox :label="'Remember Me'" inputIdValue="rememberMe" v-model="rememberMeIsActive" />
+      <BaseButton value="Login" theme="accent" type="submit" :disabled="isSubmitDisable" />
+      <BaseButton
+        value="Create Account"
+        theme="secondary"
+        @onClick="$router.push(APP_ROUTES.ENROLLMENT)"
       />
-      <PasswordField labelValue="Password" v-model="password" :isValid="true" />
-    </div>
-    <BaseCheckbox :label="'Remember Me'" inputIdValue="rememberMe" v-model="rememberMeIsActive" />
-    <BaseButton value="Login" theme="accent" type="submit" :disabled="isSubmitDisable" />
-    <BaseButton
-      value="Create Account"
-      theme="secondary"
-      @onClick="$router.push(APP_ROUTES.ENROLLMENT)"
-    />
-    <BaseButton
-      value="Forgot Password"
-      theme="secondary"
-      @click="$router.push(APP_ROUTES.FORGOT_PASSWORD)"
-    />
-  </form>
+      <BaseButton
+        value="Forgot Password"
+        theme="secondary"
+        @click="$router.push(APP_ROUTES.FORGOT_PASSWORD)"
+      />
+    </form>
+  </Transition>
   <BaseAlert
     v-if="alertDataToShow"
     :isVisible="!!alertDataToShow"
@@ -136,6 +138,7 @@ const onSubmit = () => {
     display: flex;
     flex-direction: column;
     gap: 44px;
+    margin-bottom: 12px;
   }
 }
 
@@ -161,6 +164,15 @@ const onSubmit = () => {
   content: '';
   box-sizing: border-box;
   transform: translate(-50%, -50%);
+}
+
+.slide-up-enter-active {
+  transition: all 0.85s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(50%);
 }
 
 @keyframes rotation {

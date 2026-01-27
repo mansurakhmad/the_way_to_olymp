@@ -4,7 +4,9 @@ import { EnrollmentForm } from '@/widgets/EnrollmentForm';
 
 <template>
   <div class="enrollmentPage">
-    <h2>Create Account</h2>
+    <Transition name="slide-down" appear>
+      <h2>Create Account</h2>
+    </Transition>
     <EnrollmentForm />
   </div>
 </template>
@@ -15,5 +17,14 @@ import { EnrollmentForm } from '@/widgets/EnrollmentForm';
   flex-direction: column;
   align-items: center;
   gap: 44px;
+}
+
+.slide-down-enter-from {
+  transform: translateY(-200%);
+  opacity: 0;
+}
+
+.slide-down-enter-active {
+  transition: all 0.5s ease-in-out;
 }
 </style>

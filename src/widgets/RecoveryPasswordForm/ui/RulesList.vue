@@ -30,18 +30,20 @@ const rules = computed(() => [
 </script>
 
 <template>
-  <Card class="rulesList">
-    <template #title>Password Requirements:</template>
-    <template #content>
-      <ul class="rules">
-        <li v-for="rule in rules" :key="rule.id" class="rule">
-          <p class="label">- {{ rule.label }}</p>
-          <i v-if="rule.isDone" class="pi pi-check"></i>
-          <i v-else class="pi pi-times"></i>
-        </li>
-      </ul>
-    </template>
-  </Card>
+  <Transition name="fade" appear>
+    <Card class="rulesList">
+      <template #title>Password Requirements:</template>
+      <template #content>
+        <ul class="rules">
+          <li v-for="rule in rules" :key="rule.id" class="rule">
+            <p class="label">- {{ rule.label }}</p>
+            <i v-if="rule.isDone" class="pi pi-check"></i>
+            <i v-else class="pi pi-times"></i>
+          </li>
+        </ul>
+      </template>
+    </Card>
+  </Transition>
 </template>
 
 <style lang="scss" scoped>
@@ -72,5 +74,14 @@ const rules = computed(() => [
     font-size: 12px;
     line-height: 16px;
   }
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 1s ease-in-out;
+  transition-delay: 0.75s;
 }
 </style>
