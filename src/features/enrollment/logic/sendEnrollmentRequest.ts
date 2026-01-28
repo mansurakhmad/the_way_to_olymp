@@ -7,7 +7,7 @@ export const sendEnrollmentRequest = async (bodyData: Enrollment.BodyData) => {
   const { data, error } = await api.auth.signUp({
     ...bodyData,
     options: {
-      emailRedirectTo: `${window.location.origin}${APP_ROUTES.CONFIRM}?type=enrollment&email=${bodyData.email}`,
+      emailRedirectTo: `${window.location.origin}${APP_ROUTES.lOGIN}?type=enrollment&email=${bodyData.email}`,
     },
   });
 

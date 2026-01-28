@@ -1,7 +1,6 @@
 import { createWebHistory, createRouter, type RouteRecordRaw } from 'vue-router';
 
 import { useAuthStore } from '@/features/user';
-import { ConfirmPage } from '@/pages/ConfirmPage';
 import { EnrollmentPage } from '@/pages/EnrollmentPage';
 import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
 import { LoginPage } from '@/pages/LoginPage';
@@ -26,12 +25,6 @@ const routes: RouteRecordRaw[] = [
     path: APP_ROUTES.ENROLLMENT,
     component: EnrollmentPage,
     name: APP_ROUTERS_NAMES.ENROLLMENT,
-    meta: { isOnboarding: true },
-  },
-  {
-    path: APP_ROUTES.CONFIRM,
-    component: ConfirmPage,
-    name: APP_ROUTERS_NAMES.CONFIRM,
     meta: { isOnboarding: true },
   },
   {

@@ -4,6 +4,7 @@ import { computed, ref, watch } from 'vue';
 import Dialog from 'primevue/dialog';
 import { useRouter, useRoute } from 'vue-router';
 
+import { useConfirmEnrollment } from '@/features/confirm';
 import { useLogin } from '@/features/login';
 import { APP_ROUTERS_NAMES, APP_ROUTES, EMAIL_REGEX, KEEP_USER_LOGIN } from '@/shared/config';
 import {
@@ -22,9 +23,14 @@ const email = ref('');
 const password = ref('');
 const emailIsValid = ref(true);
 const rememberMeIsActive = ref(false);
-const { login, isPending, loginAlertData } = useLogin();
 const { alertData, triggerAlert } = useAlert();
-const alertDataToShow = computed(() => alertData.value || loginAlertData.value);
+const { login, isPending, loginAlertData } = useLogin();
+
+const { confirmAlertData } = useConfirmEnrollment(email);
+
+const alertDataToShow = computed(
+  () => alertData.value || loginAlertData.value || confirmAlertData.value
+);
 
 watch(rememberMeIsActive, newValue => {
   localStorage.setItem(KEEP_USER_LOGIN, JSON.stringify(newValue));
@@ -43,15 +49,6 @@ watch(
           closeTime: 5000,
         });
       }
-
-      if (routeData.from === APP_ROUTERS_NAMES.CONFIRM) {
-        triggerAlert({
-          title: 'Success enrollment!',
-          message: 'New account confirmed successfully.',
-          closeTime: 5000,
-        });
-      }
-
       router.replace({ query: {} });
     }
   },
