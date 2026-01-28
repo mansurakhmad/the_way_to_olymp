@@ -7,14 +7,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { useConfirmEnrollment } from '@/features/confirm';
 import { useLogin } from '@/features/login';
 import { APP_ROUTERS_NAMES, APP_ROUTES, EMAIL_REGEX, KEEP_USER_LOGIN } from '@/shared/config';
-import {
-  BaseAlert,
-  BaseButton,
-  BaseCheckbox,
-  BaseInput,
-  PasswordField,
-  useAlert,
-} from '@/shared/ui';
+import { BaseButton, BaseCheckbox, BaseInput, PasswordField, useBaseAlertStore } from '@/shared/ui';
 import { testPattern } from '@/shared/utils';
 
 const router = useRouter();
@@ -23,14 +16,10 @@ const email = ref('');
 const password = ref('');
 const emailIsValid = ref(true);
 const rememberMeIsActive = ref(false);
-const { alertData, triggerAlert } = useAlert();
-const { login, isPending, loginAlertData } = useLogin();
+const { triggerAlert, closeAlert } = useBaseAlertStore();
+const { login, isPending } = useLogin();
 
-const { confirmAlertData } = useConfirmEnrollment(email);
-
-const alertDataToShow = computed(
-  () => alertData.value || loginAlertData.value || confirmAlertData.value
-);
+useConfirmEnrollment(email);
 
 watch(rememberMeIsActive, newValue => {
   localStorage.setItem(KEEP_USER_LOGIN, JSON.stringify(newValue));
@@ -58,8 +47,7 @@ watch(
 const isSubmitDisable = computed(() => !email.value || !password.value);
 
 const onSubmit = () => {
-  alertData.value = null;
-  loginAlertData.value = null;
+  closeAlert();
 
   if (!testPattern(email.value, EMAIL_REGEX)) {
     triggerAlert({
@@ -103,14 +91,6 @@ const onSubmit = () => {
       />
     </form>
   </Transition>
-  <BaseAlert
-    v-if="alertDataToShow"
-    :isVisible="!!alertDataToShow"
-    :themeValue="alertDataToShow?.theme"
-  >
-    <template #title>{{ alertDataToShow.title }}</template>
-    <template #message>{{ alertDataToShow.message }}</template>
-  </BaseAlert>
   <Dialog
     modal
     :closable="false"

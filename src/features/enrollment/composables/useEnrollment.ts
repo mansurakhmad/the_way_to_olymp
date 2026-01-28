@@ -8,7 +8,7 @@ import { sendEnrollmentRequest } from '../logic';
 import type { Enrollment } from '../models';
 
 import { APP_ROUTERS_NAMES, APP_ROUTES } from '@/shared/config';
-import { useAlert } from '@/shared/ui';
+import { useBaseAlertStore } from '@/shared/ui';
 
 export const useEnrollment = (
   emailRef: Ref<string>,
@@ -16,7 +16,7 @@ export const useEnrollment = (
   confirmPasswordRef: Ref<string>
 ) => {
   const router = useRouter();
-  const { alertData, triggerAlert } = useAlert();
+  const { triggerAlert, closeAlert } = useBaseAlertStore();
 
   const clearFormFields = () => {
     emailRef.value = '';
@@ -60,7 +60,7 @@ export const useEnrollment = (
   return {
     isPending,
     isSuccess,
-    alertData,
+    closeAlert,
     enroll: mutate,
     enrollmentData: data,
     enrollmentError: error,

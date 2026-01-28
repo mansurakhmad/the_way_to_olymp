@@ -5,12 +5,12 @@ import { useRouter } from 'vue-router';
 
 import { useForgotPassword } from '@/features/forgotPassword';
 import { EMAIL_REGEX } from '@/shared/config';
-import { BaseButton, BaseInput, BaseAlert } from '@/shared/ui';
+import { BaseButton, BaseInput } from '@/shared/ui';
 import { testPattern } from '@/shared/utils';
 
 const email = ref('');
 const router = useRouter();
-const { mutate, alertData } = useForgotPassword(email);
+const { mutate } = useForgotPassword(email);
 
 const emailIsValid = computed(() => {
   if (!email.value) return true;
@@ -38,11 +38,6 @@ const submit = () => mutate();
       </div>
     </form>
   </Transition>
-
-  <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
-    <template #title>{{ alertData?.title }}</template>
-    <template #message>{{ alertData?.message }}</template>
-  </BaseAlert>
 </template>
 
 <style lang="scss" scoped>

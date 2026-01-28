@@ -6,11 +6,11 @@ import { useRouter } from 'vue-router';
 import { sendForgotPasswordRequest } from '../logic';
 
 import { APP_ROUTES } from '@/shared/config';
-import { useAlert } from '@/shared/ui';
+import { useBaseAlertStore } from '@/shared/ui';
 
 export const useForgotPassword = (emailRef: Ref<string>) => {
   const router = useRouter();
-  const { alertData, triggerAlert } = useAlert();
+  const { triggerAlert } = useBaseAlertStore();
   const { mutate, isPending } = useMutation({
     mutationFn: () => sendForgotPasswordRequest(emailRef.value),
     onSuccess: () => {
@@ -35,9 +35,5 @@ export const useForgotPassword = (emailRef: Ref<string>) => {
     },
   });
 
-  return {
-    mutate,
-    isPending,
-    alertData,
-  };
+  return { mutate, isPending };
 };

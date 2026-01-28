@@ -2,13 +2,18 @@
 import { computed } from 'vue';
 
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools';
+import { storeToRefs } from 'pinia';
 import { RouterView, useRoute } from 'vue-router';
 
 import planet from '@/shared/assets/plannet.svg';
+import { useBaseAlertStore } from '@/shared/ui';
+import BaseAlert from '@/shared/ui/BaseAlert/ui/BaseAlert.vue';
 import { ContentContainer } from '@/widgets/ContentContainer';
 import { HeaderApp } from '@/widgets/HeaderApp';
 
 const route = useRoute();
+const baseAlertStore = useBaseAlertStore();
+const { alertData } = storeToRefs(baseAlertStore);
 
 const isOnboardingRoute = computed(() => route.meta.isOnboarding);
 </script>
@@ -29,6 +34,10 @@ const isOnboardingRoute = computed(() => route.meta.isOnboarding);
       <RouterView />
     </ContentContainer>
   </div>
+  <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
+    <template #title>{{ alertData?.title }}</template>
+    <template #message>{{ alertData?.message }}</template>
+  </BaseAlert>
   <VueQueryDevtools />
 </template>
 

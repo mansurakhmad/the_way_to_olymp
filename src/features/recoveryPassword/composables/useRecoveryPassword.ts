@@ -4,11 +4,11 @@ import { useRouter } from 'vue-router';
 import { sendRecoveryPasswordRequest } from '../logic';
 
 import { APP_ROUTERS_NAMES, APP_ROUTES } from '@/shared/config';
-import { useAlert } from '@/shared/ui';
+import { useBaseAlertStore } from '@/shared/ui';
 
 export const useRecoveryPassword = () => {
   const router = useRouter();
-  const { alertData, triggerAlert } = useAlert();
+  const { triggerAlert } = useBaseAlertStore();
 
   const { mutate } = useMutation({
     mutationFn: (password: string) => sendRecoveryPasswordRequest(password),
@@ -34,8 +34,5 @@ export const useRecoveryPassword = () => {
     },
   });
 
-  return {
-    alertData,
-    recoveryPassword: mutate,
-  };
+  return { recoverPassword: mutate };
 };

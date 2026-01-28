@@ -2,10 +2,10 @@ import { onMounted, type Ref } from 'vue';
 
 import { confirmAfterEnrollment } from '../logic';
 
-import { useAlert } from '@/shared/ui';
+import { useBaseAlertStore } from '@/shared/ui';
 
 export const useConfirmEnrollment = (email: Ref<string>) => {
-  const { alertData, triggerAlert } = useAlert();
+  const { triggerAlert } = useBaseAlertStore();
 
   onMounted(async () => {
     const emailValue = await confirmAfterEnrollment();
@@ -20,6 +20,4 @@ export const useConfirmEnrollment = (email: Ref<string>) => {
       });
     }
   });
-
-  return { confirmAlertData: alertData };
 };
