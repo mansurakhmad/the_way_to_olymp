@@ -3,13 +3,13 @@ import { computed, ref } from 'vue';
 
 import { useEnrollment } from '@/features/enrollment';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/shared/config';
-import { BaseAlert, BaseButton, BaseInput, PasswordField } from '@/shared/ui';
+import { BaseButton, BaseInput, PasswordField } from '@/shared/ui';
 import { testPattern } from '@/shared/utils';
 
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const { enroll, alertData } = useEnrollment(email, password, confirmPassword);
+const { enroll, closeAlert } = useEnrollment(email, password, confirmPassword);
 
 const passwordValuesAreValid = computed(() => {
   if (!confirmPassword.value) return true;
@@ -28,7 +28,8 @@ const submitButtonDisabled = computed(() => {
 });
 
 const submitForm = () => {
-  alertData.value = null;
+  closeAlert();
+
   enroll({ email: email.value, password: password.value });
 };
 </script>
@@ -61,10 +62,6 @@ const submitForm = () => {
       </div>
     </form>
   </Transition>
-  <BaseAlert v-if="alertData" :isVisible="!!alertData" :themeValue="alertData.theme">
-    <template #title>{{ alertData?.title }}</template>
-    <template #message>{{ alertData?.message }}</template>
-  </BaseAlert>
 </template>
 
 <style lang="scss" scoped>

@@ -6,11 +6,11 @@ import { sendLoginRequest } from '../logic/sendLoginRequest';
 import type { Login } from '../models';
 
 import { APP_ROUTES } from '@/shared/config';
-import { useAlert } from '@/shared/ui';
+import { useBaseAlertStore } from '@/shared/ui';
 
 export const useLogin = () => {
   const router = useRouter();
-  const { alertData, triggerAlert } = useAlert();
+  const { triggerAlert } = useBaseAlertStore();
   const { mutate, data, error, isPending } = useMutation({
     mutationFn: (bodyData: Login.BodyData) => sendLoginRequest(bodyData),
     onSuccess: async () => {
@@ -31,6 +31,5 @@ export const useLogin = () => {
     login: mutate,
     userData: data,
     loginError: error,
-    loginAlertData: alertData,
   };
 };

@@ -1,36 +1,39 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia';
 import { Dialog } from 'primevue';
-import type { BaseAlertTypes } from '../models';
 
-const { isVisible, themeValue = 'default' } = defineProps<BaseAlertTypes.Props>();
+import { useBaseAlertStore } from '../store';
+
+const alertStore = useBaseAlertStore();
+
+const { alertData } = storeToRefs(alertStore);
 </script>
 
 <template>
   <Dialog
     class="baseDialog"
     position="bottom"
-    :class="`${themeValue}Theme`"
-    :visible="isVisible"
+    :class="`${alertData?.theme}Theme`"
+    :visible="!!alertData"
     :draggable="false"
     :closable="false"
+    :pt="{ header: { style: 'padding: 16px 0 0' } }"
   >
-    <h4 class="title">
-      <slot name="title"></slot>
-    </h4>
-    <p class="message">
-      <slot name="message"></slot>
-    </p>
+    <div class="content">
+      <h4 class="title">
+        <slot name="title">{{ alertData?.title }}</slot>
+      </h4>
+      <p class="message">
+        <slot name="message">{{ alertData?.message }}</slot>
+      </p>
+    </div>
   </Dialog>
 </template>
 
 <style lang="scss">
-.baseDialog {
+.baseDialog.p-dialog {
   border: none;
   color: var(--white-100);
-  box-shadow:
-    -10px 0 13px -7px var(--black-100),
-    10px 0 13px -7px var(--black-100),
-    5px 5px 15px 5px var(--black-100);
 
   &.defaultTheme {
     background-color: var(--wine-150);
@@ -38,6 +41,17 @@ const { isVisible, themeValue = 'default' } = defineProps<BaseAlertTypes.Props>(
 
   &.errorTheme {
     background-color: var(--wine-100);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .title {
+      font-size: 28px;
+      line-height: 32px;
+    }
   }
 }
 </style>

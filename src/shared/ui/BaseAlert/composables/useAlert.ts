@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { readonly, ref } from 'vue';
 
 import type { BaseAlertTypes } from '../models';
 
@@ -21,5 +21,7 @@ export const useAlert = () => {
       }, closeTime);
   };
 
-  return { alertData, triggerAlert };
+  const closeAlert = () => (alertData.value = null);
+
+  return { alertData: readonly(alertData), triggerAlert, closeAlert };
 };
