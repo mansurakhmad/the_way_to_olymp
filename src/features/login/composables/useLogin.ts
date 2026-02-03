@@ -12,10 +12,9 @@ export const useLogin = () => {
   const router = useRouter();
   const { triggerAlert } = useBaseAlertStore();
   const { mutate, data, error, isPending } = useMutation({
+    meta: { showLoader: true },
     mutationFn: (bodyData: Login.BodyData) => sendLoginRequest(bodyData),
-    onSuccess: async () => {
-      router.replace(APP_ROUTES.MAIN);
-    },
+    onSuccess: () => router.replace(APP_ROUTES.MAIN),
     onError: error => {
       triggerAlert({
         title: error.name,

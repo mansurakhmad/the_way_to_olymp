@@ -25,6 +25,7 @@ export const useEnrollment = (
   };
 
   const { mutate, isPending, data, error, isSuccess } = useMutation({
+    meta: { showLoader: true },
     mutationFn: (bodyData: Enrollment.BodyData) => sendEnrollmentRequest(bodyData),
     onSuccess: data => {
       triggerAlert({

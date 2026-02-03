@@ -11,6 +11,7 @@ export const useRecoveryPassword = () => {
   const { triggerAlert } = useBaseAlertStore();
 
   const { mutate } = useMutation({
+    meta: { showLoader: true },
     mutationFn: (password: string) => sendRecoveryPasswordRequest(password),
     onSuccess: response => {
       router.replace({

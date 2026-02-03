@@ -12,6 +12,7 @@ export const useForgotPassword = (emailRef: Ref<string>) => {
   const router = useRouter();
   const { triggerAlert } = useBaseAlertStore();
   const { mutate, isPending } = useMutation({
+    meta: { showLoader: true },
     mutationFn: () => sendForgotPasswordRequest(emailRef.value),
     onSuccess: () => {
       triggerAlert({
