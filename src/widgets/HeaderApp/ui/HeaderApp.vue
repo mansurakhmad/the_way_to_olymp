@@ -3,6 +3,8 @@ import { computed } from 'vue';
 
 import { RouterLink, useRoute } from 'vue-router';
 
+import UserControl from './UserControl.vue';
+
 import logo from '@/shared/assets/SmallLogo.svg';
 import { APP_ROUTES } from '@/shared/config';
 
@@ -23,10 +25,19 @@ const isOnboarding = computed(() => route.meta.isOnboarding);
         </div>
       </RouterLink>
     </Transition>
+    <div>
+      <UserControl />
+    </div>
   </header>
 </template>
 
 <style lang="scss" scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .icon {
   display: flex;
   align-items: center;
