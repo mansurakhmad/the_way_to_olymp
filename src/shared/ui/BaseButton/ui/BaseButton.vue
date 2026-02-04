@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Button } from 'primevue';
+
 import type { BaseButtonTypes } from '../models';
 
 const {
@@ -25,13 +26,12 @@ const {
   &:not(:disabled):hover {
     background: var(--gold-100);
     border: 1px solid var(--gold-100);
-    font-weight: 500;
+    color: var(--white-100);
   }
 
   &:not(:disabled):active {
     background: var(--gold-50);
     border: 1px solid var(--gold-50);
-    font-weight: 500;
   }
 
   &.primaryTheme {
@@ -53,7 +53,6 @@ const {
   &.accentTheme {
     background: var(--gold-100);
     border: 1px solid var(--gold-100);
-    font-weight: 500;
 
     &:not(:disabled):hover {
       background: var(--gold-50);
@@ -65,6 +64,31 @@ const {
       background: var(--gold-10);
       border: 1px solid var(--gold-10);
       color: var(--white-100);
+    }
+  }
+
+  &.outlineTheme {
+    background: transparent;
+    border: 1px solid var(--white-100);
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+      background-color: var(--glass-white);
+      border: 1px solid var(--white-100);
+      color: var(--white-100);
+    }
+  }
+
+  &.outlineCyanTheme {
+    background: transparent;
+    border: 1px solid var(--cyan-50-o-80);
+    color: var(--cyan-50);
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active {
+      background-color: var(--glass-white);
+      border: 1px solid var(--cyan-10);
+      color: var(--cyan-10);
     }
   }
 }
